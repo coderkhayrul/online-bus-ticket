@@ -16,7 +16,6 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    @include('sweetalert::alert')
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
 
@@ -36,18 +35,18 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        @if (Auth()->user()->is_admin == true)
+                        @if (Auth()?->user()?->is_admin)
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.home') }}">Buses</a>
+                                <a class="nav-link" href="{{ route('admin.buses.index') }}">Buses</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.home') }}">Trip List</a>
+                                <a class="nav-link" href="{{ route('admin.trips.index') }}">Trips</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('location.index') }}">Location</a>
+                                <a class="nav-link" href="{{ route('admin.locations.index') }}">Locations</a>
                             </li>
-                            <li class="nav-item now">
-                                <a class="nav-link" href="{{ route('seat-allocation.index') }}">Seat Allocation</a>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('admin.seats.index') }}">Seats</a>
                             </li>
                         @endif
                     </ul>
@@ -96,6 +95,9 @@
             @yield('content')
         </main>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    @include('sweetalert::alert')
+    @stack('scripts')
 </body>
 
 </html>

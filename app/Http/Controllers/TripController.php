@@ -12,7 +12,12 @@ class TripController extends Controller
      */
     public function index()
     {
-        //
+        $trips = Trip::all();
+        $title = 'Delete User!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
+
+        return view('trip.index', compact('trips'));
     }
 
     /**
@@ -20,7 +25,7 @@ class TripController extends Controller
      */
     public function create()
     {
-        //
+        return view('trip.create');
     }
 
     /**
@@ -28,7 +33,14 @@ class TripController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+
+        Trip::create($request->all());
+
+        toast('Trip Created Successfully', 'success');
+        return redirect()->route('admin.trips.index');
     }
 
     /**
@@ -44,7 +56,7 @@ class TripController extends Controller
      */
     public function edit(Trip $trip)
     {
-        //
+        return view('trip.edit', compact('trip'));
     }
 
     /**
@@ -52,7 +64,14 @@ class TripController extends Controller
      */
     public function update(Request $request, Trip $trip)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+
+        $trip->update($request->all());
+
+        toast('Trip Updated Successfully', 'success');
+        return redirect()->route('admin.trips.index');
     }
 
     /**
@@ -60,6 +79,8 @@ class TripController extends Controller
      */
     public function destroy(Trip $trip)
     {
-        //
+        $trip->delete();
+        toast('Trip Deleted Successfully', 'success');
+        return redirect()->route('admin.trips.index');
     }
 }

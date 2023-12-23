@@ -12,7 +12,13 @@ class LocationController extends Controller
      */
     public function index()
     {
-        //
+        $locations = Location::all();
+        $title = 'Delete User!';
+        $text = "Are you sure you want to delete?";
+
+        confirmDelete($title, $text);
+
+        return view('location.index', compact('locations'));
     }
 
     /**
@@ -20,7 +26,7 @@ class LocationController extends Controller
      */
     public function create()
     {
-        //
+        return view('location.create');
     }
 
     /**
@@ -28,7 +34,13 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => ['required', 'unique:locations,name'],
+        ]);
+
+        Location::create($request->all());
+        toast('Location created successfully!', 'success');
+        return redirect()->route('admin.locations.index');
     }
 
     /**
@@ -44,7 +56,7 @@ class LocationController extends Controller
      */
     public function edit(Location $location)
     {
-        //
+        return view('location.edit', compact('location'));
     }
 
     /**
@@ -52,7 +64,13 @@ class LocationController extends Controller
      */
     public function update(Request $request, Location $location)
     {
-        //
+        $this->validate($request, [
+            'name' => ['required', 'unique:locations,name,' . $location->id],
+        ]);
+
+        $location->update($request->all());
+        toast('Location updated successfully!', 'success');
+        return redirect()->route('admin.locations.index');
     }
 
     /**
@@ -60,6 +78,8 @@ class LocationController extends Controller
      */
     public function destroy(Location $location)
     {
-        //
+        $location->delete();
+        toast('Location deleted successfully!', 'success');
+        return redirect()->route('admin.locations.index');
     }
 }

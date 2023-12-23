@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bus;
 use App\Models\Seat;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,13 @@ class SeatController extends Controller
      */
     public function index()
     {
-        //
+        $seats = Seat::with('bus')->paginate(20);
+        $title = 'Delete User!';
+        $text = "Are you sure you want to delete?";
+
+        confirmDelete($title, $text);
+
+        return view('seat.index', compact('seats'));
     }
 
     /**
@@ -20,7 +27,8 @@ class SeatController extends Controller
      */
     public function create()
     {
-        //
+        $buses = Bus::all();
+        return view('seat.create', compact('buses'));
     }
 
     /**
@@ -28,7 +36,14 @@ class SeatController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'bus_id' => 'required',
+            'name' => 'required',
+        ]);
+
+        Seat::create($request->all());
+        toast('Seat created successfully!', 'success');
+        return redirect()->route('admin.seats.index');
     }
 
     /**
@@ -44,7 +59,8 @@ class SeatController extends Controller
      */
     public function edit(Seat $seat)
     {
-        //
+        $buses = Bus::all();
+        return view('seat.edit', compact('seat', 'buses'));
     }
 
     /**
@@ -52,7 +68,14 @@ class SeatController extends Controller
      */
     public function update(Request $request, Seat $seat)
     {
-        //
+        $this->validate($request, [
+            'bus_id' => 'required|exists:buses,id',
+            'name' => 'required',
+        ]);
+
+        $seat->update($request->all());
+        toast('Seat updated successfully!', 'success');
+        return redirect()->route('admin.seats.index');
     }
 
     /**
@@ -60,6 +83,8 @@ class SeatController extends Controller
      */
     public function destroy(Seat $seat)
     {
-        //
+        $seat->delete();
+        toast('Seat deleted successfully!', 'success');
+        return redirect()->route('admin.seats.index');
     }
 }

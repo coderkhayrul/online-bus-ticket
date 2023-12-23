@@ -15,23 +15,19 @@ class LocationSeeder extends Seeder
         $locations = [
             [
                 'name' => 'Dhaka',
-                'address' => 'Dhanmondi',
-                'is_active' => true,
+                'status' => true,
             ],
             [
                 'name' => 'Comilla',
-                'address' => 'BOG',
-                'is_active' => true,
+                'status' => true,
             ],
             [
                 'name' => 'Chittagong',
-                'address' => 'BOG',
-                'is_active' => true,
+                'status' => true,
             ],
             [
                 'name' => 'Coxs Bazaar',
-                'address' => 'BOG',
-                'is_active' => true,
+                'status' => true,
             ],
         ];
 

@@ -6,9 +6,8 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
-                        All Location List
-                        <a href="{{ route('admin.locations.create') }}" class="btn btn-sm btn-success"
-                            style="float: right;">Add
+                        All Bus List
+                        <a href="{{ route('admin.buses.create') }}" class="btn btn-sm btn-success" style="float: right;">Add
                             New</a>
                     </div>
                     <div class="card-body">
@@ -16,28 +15,30 @@
                             <thead>
                                 <tr>
                                     <th scope="col">SL.</th>
-                                    <th scope="col">Trip Name</th>
+                                    <th scope="col">Bus Name</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($locations as $key => $location)
+                                @foreach ($buses as $key => $bus)
                                     <tr>
                                         <th scope="row">{{ $key + 1 }}</th>
-                                        <td>{{ $location->name }}</td>
+                                        <td>{{ $bus->name }}</td>
                                         <td>
-                                            @if ($location->status == 1)
+                                            @if ($bus->status == 1)
                                                 <span class="badge bg-success">Active</span>
                                             @else
                                                 <span class="badge bg-danger">Inactive</span>
                                             @endif
                                         </td>
                                         <td>
-                                            <a href="{{ route('admin.locations.edit', $location) }}"
+                                            <a href="{{ route('admin.buses.show', $bus) }}" class="btn btn-sm btn-info">Show
+                                                Seats</a>
+                                            <a href="{{ route('admin.buses.edit', $bus) }}"
                                                 class="btn btn-sm btn-primary">Edit</a>
-                                            <a href="{{ route('admin.locations.destroy', $location) }}"
-                                                data-confirm-delete="true" class="btn btn-sm btn-danger">Delete</a>
+                                            <a href="{{ route('admin.buses.destroy', $bus) }}" data-confirm-delete="true"
+                                                class="btn btn-sm btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -49,21 +50,3 @@
         </div>
     </div>
 @endsection
-@push('scripts')
-    <script>
-        $('[data-confirm-delete]').on('click', function() {
-            var id = $(this).data('id');
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: `Confirm`,
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $(`#deleteForm`).submit();
-                }
-            })
-        });
-    </script>
-@endpush

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Bus;
 use App\Models\Seat;
 use Illuminate\Database\Seeder;
 
@@ -123,8 +124,9 @@ class SeatSeeder extends Seeder
             ],
         ];
 
-        foreach ($seats as $seat) {
-            Seat::create($seat);
+        $buses = Bus::all();
+        foreach ($buses as $bus) {
+            $bus->seats()->createMany($seats);
         }
     }
 }

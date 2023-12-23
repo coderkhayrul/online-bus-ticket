@@ -12,7 +12,11 @@ class BusController extends Controller
      */
     public function index()
     {
-        //
+        $buses = Bus::all();
+        $title = 'Delete User!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
+        return view('bus.index', compact('buses'));
     }
 
     /**
@@ -20,7 +24,7 @@ class BusController extends Controller
      */
     public function create()
     {
-        //
+        return view('bus.create');
     }
 
     /**
@@ -28,7 +32,14 @@ class BusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+
+        Bus::create($request->all());
+
+        toast('Bus Created Successfully', 'success');
+        return redirect()->route('admin.buses.index');
     }
 
     /**
@@ -36,7 +47,9 @@ class BusController extends Controller
      */
     public function show(Bus $bus)
     {
-        //
+        // Get All Bus With Seats
+        $bus = Bus::with('seats')->find($bus->id);
+        return view('bus.show', compact('bus'));
     }
 
     /**
@@ -44,15 +57,20 @@ class BusController extends Controller
      */
     public function edit(Bus $bus)
     {
-        //
+        return view('bus.edit', compact('bus'));
     }
 
-    /**
-     * Update the specified resource in storage.
+    /**n
+     * Update the specified resource i storage.
      */
     public function update(Request $request, Bus $bus)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+        ]);
+        $bus->update($request->all());
+        toast('Bus Updated Successfully', 'success');
+        return redirect()->route('admin.buses.index');
     }
 
     /**
@@ -60,6 +78,8 @@ class BusController extends Controller
      */
     public function destroy(Bus $bus)
     {
-        //
+        $bus->delete();
+        alert()->success('SuccessAlert', 'Bus Delete Successfully')->persistent(true, false);
+        return redirect()->route('admin.buses.index');
     }
 }

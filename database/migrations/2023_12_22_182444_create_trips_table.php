@@ -13,13 +13,7 @@ return new class extends Migration
     {
         Schema::create('trips', function (Blueprint $table) {
             $table->id();
-            $table->string('pickup_location');
-            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade');
-            $table->foreignId('seat_id')->constrained('seats')->onUpdate('cascade');
-            $table->foreignId('location_id')->constrained('locations')->onUpdate('cascade');
-            $table->date('departure_date');
-            $table->integer('trip_type')->default(1);
-            $table->integer('price');
+            $table->string('name');
             $table->integer('status')->default(1);
             $table->timestamps();
         });
