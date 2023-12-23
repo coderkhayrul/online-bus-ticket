@@ -3,6 +3,7 @@
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SeatAllocationController;
 use App\Http\Controllers\SeatController;
 use App\Http\Controllers\TripController;
@@ -32,4 +33,5 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('trips', TripController::class);
     Route::resource('locations', LocationController::class);
     Route::resource('seats', SeatController::class);
+    Route::resource('schedules', ScheduleController::class);
 });
