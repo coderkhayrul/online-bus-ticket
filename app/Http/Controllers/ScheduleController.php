@@ -16,9 +16,10 @@ class ScheduleController extends Controller
     {
         $schedules = Schedule::with('bus', 'trip')->get();
         $title = 'Delete User!';
-        $text = "Are you sure you want to delete?";
+        $text = 'Are you sure you want to delete?';
 
         confirmDelete($title, $text);
+
         return view('schedule.index', compact('schedules'));
     }
 
@@ -29,6 +30,7 @@ class ScheduleController extends Controller
     {
         $buses = Bus::where('status', 1)->get();
         $trips = Trip::where('status', 1)->get();
+
         return view('schedule.create', compact('buses', 'trips'));
     }
 
@@ -45,7 +47,10 @@ class ScheduleController extends Controller
         ]);
 
         Schedule::create($request->all());
-        return redirect()->route('admin.schedules.index')->with('success', 'Schedule created successfully');
+
+        toast('Schedule created successfully', 'success');
+
+        return redirect()->route('admin.schedules.index');
     }
 
     /**
@@ -63,6 +68,7 @@ class ScheduleController extends Controller
     {
         $buses = Bus::where('status', 1)->get();
         $trips = Trip::where('status', 1)->get();
+
         return view('schedule.edit', compact('schedule', 'buses', 'trips'));
     }
 
@@ -80,6 +86,7 @@ class ScheduleController extends Controller
 
         $schedule->update($request->all());
         toast('Schedule updated successfully', 'success');
+
         return redirect()->route('admin.schedules.index');
     }
 
@@ -90,6 +97,7 @@ class ScheduleController extends Controller
     {
         $schedule->delete();
         toast('Schedule deleted successfully', 'success');
+
         return redirect()->route('admin.schedules.index');
     }
 }

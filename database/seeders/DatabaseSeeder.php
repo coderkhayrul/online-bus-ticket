@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Bus;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -23,6 +22,7 @@ class DatabaseSeeder extends Seeder
             TripSeeder::class,
             LocationSeeder::class,
             SeatSeeder::class,
+            ScheduleSeeder::class,
         ]);
 
         // \App\Models\User::factory()->create([

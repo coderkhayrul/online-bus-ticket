@@ -30,7 +30,7 @@
                                         <td>
                                             {{ $schedule->departure_date }}
                                         </td>
-                                        <td>{{ $schedule->price }}</td>
+                                        <td>৳{{ $schedule->fare }}</td>
                                         <td>
                                             <a href="{{ route('admin.schedules.edit', $schedule) }}"
                                                 class="btn btn-sm btn-primary">Edit</a>
