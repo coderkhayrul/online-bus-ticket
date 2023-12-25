@@ -17,7 +17,9 @@
                                         <h5 class="mb-1">{{ $order?->schedule?->trip?->name ?? 'N/A' }}</h5>
                                         <small>৳{{ $order?->schedule->fare }}</small>
                                     </div>
-                                    <p class="mb-1">User Name: {{ $order->user->name }}</p>
+                                    <p class="mb-1">User Name: <span
+                                            class="text-danger fs-5">{{ $order->user->name }}</span>
+                                    </p>
                                     <p class="mb-1">Seat Number: {{ $order->seat->name }}</p>
                                     <p class="mb-1">Bus Name: {{ $order->schedule->bus->name }}</p>
                                     <p class="mb-1">Date: {{ $order->schedule->departure_date }}</p>

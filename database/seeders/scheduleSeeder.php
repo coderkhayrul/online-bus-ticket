@@ -16,25 +16,25 @@ class scheduleSeeder extends Seeder
             [
                 'trip_id' => 1,
                 'bus_id' => 1,
-                'departure_date' => '2023-10-01',
+                'departure_date' => '2023-12-28',
                 'fare' => 450,
             ],
             [
                 'trip_id' => 1,
                 'bus_id' => 2,
-                'departure_date' => '2023-10-02',
+                'departure_date' => '2023-12-28',
                 'fare' => 500,
             ],
             [
                 'trip_id' => 1,
                 'bus_id' => 3,
-                'departure_date' => '2023-10-03',
+                'departure_date' => '2023-12-28',
                 'fare' => 450,
             ],
             [
                 'trip_id' => 1,
                 'bus_id' => 4,
-                'departure_date' => '2023-10-04',
+                'departure_date' => '2023-12-28',
                 'fare' => 650,
             ],
         ];
