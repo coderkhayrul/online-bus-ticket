@@ -20,4 +20,9 @@ class Schedule extends Model
     {
         return $this->belongsTo(Bus::class);
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }

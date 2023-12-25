@@ -7,50 +7,75 @@
                 <div class="card">
                     <div class="card-header bg-primary text-white">Welcome To Online Ticket Platform</div>
                     <div class="card-body">
-                        <form class="row g-3" method="POST" action="">
-                            @csrf
+                        <form class="row g-3" method="GET" action="">
                             <div class="col-md-6">
-                                <label for="inputEmail4" class="form-label">PICKUP LOCATION <span
+                                <label for="trip" class="form-label">Select Trip <span
                                         class="text-danger">*</span></label>
                                 <div class="input-group">
                                     <div class="input-group-text"><i class="fa-solid fa-location-dot"></i></div>
-                                    <select id="inputState" class="form-select">
-                                        <option selected>Select City</option>
-                                        <option>Dhaka to Cox's Bazar</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="inputEmail4" class="form-label"><span class="text-danger">*</span>DROPOFF
-                                    LOCATION</label>
-                                <div class="input-group">
-                                    <div class="input-group-text"><i class="fa-solid fa-location-arrow"></i></div>
-                                    <select id="inputState" class="form-select">
-                                        <option selected>Select City</option>
-                                        @foreach ($locations as $location)
-                                            <option value="{{ $location->id }}">{{ $location->name }}</option>
+                                    <select name="trip" id="trip" class="form-select" required>
+                                        <option selected disabled value="">Select City</option>
+                                        @foreach ($trips as $trip)
+                                            <option value="{{ $trip->id }}"
+                                                {{ isset($tripId) ? ($trip->id == $tripId ? 'selected' : '') : '' }}>
+                                                {{ $trip->name }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
+                                @error('trip')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
+
                             <div class="col-6">
-                                <label for="start_date" class="form-label">Departure Date <span
+                                <label for="departure" class="form-label">Departure Date <span
                                         class="text-danger">*</span></label>
-                                <input name="start_date" type="date" class="form-control" id="start_date">
-                            </div>
-                            <div class="col-6">
-                                <label for="tripType" class="form-label">Trip Type</label>
-                                <select name="trip_type" id="tripType" class="form-select">
-                                    <option value="round" selected>round-trip</option>
-                                </select>
+                                <input name="departure" type="date" class="form-control" id="departure"
+                                    value="{{ isset($departure) ? $departure : '' }}">
+                                @error('departure')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="col-12 text-center mt-5">
-                                <button type="submit" class="btn btn-lg btn-primary">Search Now</button>
+                                <button type="submit" class="btn btn-lg btn-success searchNow">Search Now</button>
                             </div>
                         </form>
                     </div>
+                    @if ($resultTrip)
+                        <div class="card-body mt-4">
+                            <div class="card-header">
+                                <h4 class="text-center">Available Bus For <span
+                                        class="text-danger">{{ $resultTrip->name }}</span></h4>
+                            </div>
+                            <div class="d-flex flex-column flex-md-row gap-4 align-items-center justify-content-center">
+                                <div class="list-group w-100">
+                                    @forelse ($resultTrip->schedules as $schedule)
+                                        <a href="{{ route('website.schedule.view', $schedule) }}"
+                                            class="list-group-item list-group-item-action d-flex gap-3 py-3 my-2"
+                                            aria-current="true">
+                                            <img src="{{ asset('assets/bus.png') }}" alt="twbs" width="32"
+                                                height="32" class="rounded-circle flex-shrink-0">
+                                            <div class="d-flex gap-2 w-100 justify-content-between">
+                                                <div>
+                                                    <h6 class="mb-0">{{ $schedule?->bus?->name ?? 'N/A' }}</h6>
+                                                    <p class="mb-0 opacity-75"> DEPARTURE DATE:
+                                                        {{ $schedule->departure_date }}
+                                                    </p>
+                                                </div>
+                                                <small class="opacity-50 text-nowrap">{{ '৳' . $schedule->fare }}</small>
+                                            </div>
+                                        </a>
+                                    @empty
+                                        <div class="alert alert-danger text-center" role="alert">
+                                            No Bus Available
+                                        </div>
+                                    @endforelse
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
-    </div>
-@endsection
+    @endsection
