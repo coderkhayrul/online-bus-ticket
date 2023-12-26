@@ -20,6 +20,11 @@ class HomeController extends Controller
     //     $this->middleware('auth');
     // }
 
+    public function installationGuide()
+    {
+        return view('installation-guide');
+    }
+
     /**
      * Show the application dashboard.
      *
@@ -46,14 +51,16 @@ class HomeController extends Controller
 
             return view('welcome', compact('locations', 'trips', 'resultTrip', 'tripId', 'departure'));
         }
+
         return view('welcome', compact('locations', 'trips', 'resultTrip'));
     }
 
     public function viewSchedule(Schedule $schedule)
     {
         // Auth User Check
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             alert()->error('Error', 'You need to login first!');
+
             return back();
         }
 
@@ -61,6 +68,7 @@ class HomeController extends Controller
         $locations = Location::all();
         $orders = Order::where('schedule_id', $schedule->id)->get();
         $orders->load('seat');
+
         return view('schedule', compact('schedule', 'locations', 'orders'));
     }
 
@@ -87,9 +95,10 @@ class HomeController extends Controller
         ]);
 
         alert()->success('Confirm', 'Thanks for booking with us!');
+
         return response()->json([
             'status' => 'success',
-            'message' => 'Order Created Successfully'
+            'message' => 'Order Created Successfully',
         ]);
     }
 
@@ -97,6 +106,7 @@ class HomeController extends Controller
     {
         // Get All Ticket
         $orders = auth()->user()->orders()->with('schedule', 'seat', 'location', 'user', 'schedule.trip', 'schedule.bus')->get();
+
         return view('my-ticket', compact('orders'));
     }
 }

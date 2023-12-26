@@ -26,6 +26,7 @@ Route::get('/', [HomeController::class, 'home'])->name('website.home');
 Route::get('/schedule/{schedule}', [HomeController::class, 'viewSchedule'])->name('website.schedule.view');
 Route::post('/ticket-booking', [HomeController::class, 'ticketBooking'])->name('website.ticket.booking');
 Route::get('/my-ticket', [HomeController::class, 'myTicket'])->name('website.ticket')->middleware('auth');
+Route::get('installation-guide', [HomeController::class, 'installationGuide'])->name('website.installation.guide');
 
 // ADMIN ROUTE LIST HERE
 Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {

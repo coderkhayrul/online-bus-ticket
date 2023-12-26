@@ -60,6 +60,11 @@
                                 <a class="nav-link" href="{{ route('website.ticket') }}">My Tickets</a>
                             </li>
                         @endauth
+                        <li class="nav-item">
+                            <a class="nav-link text-danger"
+                                href="{{ route('website.installation.guide') }}">Installation
+                                Guide</a>
+                        </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
